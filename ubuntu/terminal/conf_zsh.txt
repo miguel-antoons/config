@@ -1,0 +1,4 @@
+https://itsfoss.com/zsh-ubuntu/
+https://ohmyposh.dev/docs/installation/linux
+https://www.baeldung.com/linux/gnome-terminal-profile-export
+Then, copy (relevant) content from ~/.profile to ~.zshrc
