@@ -1,4 +1,8 @@
 [/]
+list=['d0c9f2a1-4b7e-4c3a-8f5d-1e9b6a2c7d4e']
+default='d0c9f2a1-4b7e-4c3a-8f5d-1e9b6a2c7d4e'
+
+[:d0c9f2a1-4b7e-4c3a-8f5d-1e9b6a2c7d4e]
 background-transparency-percent=11
 bold-is-bright=false
 default-size-columns=100

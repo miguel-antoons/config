@@ -10,16 +10,17 @@ echo "Setting up macOS configurations..."
 COMMON_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../common" && pwd)"
 
 # Zed editor configurations
+# On macOS, Zed stores its configuration in ~/.config/zed
 ZED_DIR="$COMMON_DIR/zed"
 ZED_TARGET_DIR="$HOME/.config/zed"
 
 if [ -d "$ZED_DIR" ]; then
     echo "Installing Zed configurations..."
-    mkdir -p "$ZED_TARGET_DIR"
-    cp "$ZED_DIR"/keymap.json "$ZED_TARGET_DIR/keymap.json"
-    cp "$ZED_DIR"/settings.json "$ZED_TARGET_DIR/settings.json"
-    cp "$ZED_DIR"/miguel-blur-3.json.json "$ZED_TARGET_DIR/themes/miguel-blur-3.json"
-    
+    mkdir -p "$ZED_TARGET_DIR/themes"
+    cp "$ZED_DIR/keymap.json" "$ZED_TARGET_DIR/keymap.json"
+    cp "$ZED_DIR/settings.json" "$ZED_TARGET_DIR/settings.json"
+    cp "$ZED_DIR/miguel-blur-3.json" "$ZED_TARGET_DIR/themes/miguel-blur-3.json"
+
     echo "Zed configurations installed."
 fi
 

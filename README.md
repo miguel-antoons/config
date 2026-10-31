@@ -11,16 +11,14 @@ config/
 │       ├── keymap.json
 │       ├── miguel-blur-3.json
 │       └── settings.json
-├── linux/           # Linux-specific configurations
+├── macos/            # macOS-specific configurations
 │   └── setup.sh      # Installation script (includes common configs)
-├── macos/           # macOS-specific configurations
-│   └── setup.sh      # Installation script (includes common configs)
-├── ubuntu/          # Ubuntu-specific configurations
+├── ubuntu/           # Ubuntu-specific configurations
 │   ├── setup.sh      # Installation script (includes common configs)
 │   └── terminal/     # Terminal configurations
 │       ├── gnomeProfile.dconf
 │       └── conf_zsh.txt
-└── windows/         # Windows-specific configurations
+└── windows/          # Windows-specific configurations
     └── setup.ps1     # Installation script (includes common configs)
 ```
 
@@ -30,9 +28,6 @@ config/
 Configurations in the `common/` directory are designed to work across all operating systems:
 
 - **Zed Editor**: Key bindings, settings, and theme configuration files in `common/zed/`
-
-### Linux
-Currently contains no OS-specific configuration files. The setup script will install common configurations.
 
 ### macOS
 Currently contains no OS-specific configuration files. The setup script will install common configurations.
@@ -55,90 +50,82 @@ Each OS-specific setup script automatically installs both the OS-specific config
 ### Prerequisites
 
 For Ubuntu setup:
+
 - `dconf-cli` package must be installed for GNOME Terminal profile loading
 
 ### Installing for Ubuntu
 
 1. Navigate to the ubuntu directory:
+
    ```bash
    cd config/ubuntu
    ```
 
 2. Make the setup script executable (if not already):
+
    ```bash
    chmod +x setup.sh
    ```
 
 3. Run the setup script:
+
    ```bash
    ./setup.sh
    ```
 
    This will:
-   - Load the GNOME Terminal profile into dconf
-   - Install Zed editor configurations to `~/.zed/`
+   - Load the GNOME Terminal profile into dconf (creates the "Miguel" profile and sets it as default)
+   - Install Zed editor configurations to `~/.config/zed/` (keymap and settings at the root, theme in `~/.config/zed/themes/`)
    - Note: For ZSH setup, follow the instructions in `terminal/conf_zsh.txt` manually
-
-### Installing for Linux
-
-1. Navigate to the linux directory:
-   ```bash
-   cd config/linux
-   ```
-
-2. Make the setup script executable:
-   ```bash
-   chmod +x setup.sh
-   ```
-
-3. Run the setup script:
-   ```bash
-   ./setup.sh
-   ```
-
-   This will:
-   - Install Zed editor configurations to `~/.zed/`
 
 ### Installing for macOS
 
 1. Navigate to the macos directory:
+
    ```bash
    cd config/macos
    ```
 
 2. Make the setup script executable:
+
    ```bash
    chmod +x setup.sh
    ```
 
 3. Run the setup script:
+
    ```bash
    ./setup.sh
    ```
 
    This will:
-   - Install Zed editor configurations to `~/.zed/`
+   - Install Zed editor configurations to `~/.config/zed/` (keymap and settings at the root, theme in `~/.config/zed/themes/`)
 
 ### Installing for Windows
 
 1. Navigate to the windows directory in PowerShell:
+
    ```powershell
    cd config\windows
    ```
 
 2. Run the setup script:
+
    ```powershell
    .\setup.ps1
    ```
 
    This will:
-   - Install Zed editor configurations to `%APPDATA%\Zed`
+   - Install Zed editor configurations to `%APPDATA%\Zed` (keymap and settings at the root, theme in `%APPDATA%\Zed\themes\`)
 
 ## Configuration Details
 
 ### Zed Editor (Common)
+
+Installed per OS to the Zed config directory (`~/.config/zed/` on Linux/macOS, `%APPDATA%\Zed` on Windows):
+
 - `keymap.json`: Custom key bindings
-- `miguel-blur-3.json`: Custom theme
+- `miguel-blur-3.json`: Custom theme (installed into the `themes/` subdirectory)
 - `settings.json`: Editor settings
 
 ### Ubuntu Terminal
@@ -154,4 +141,5 @@ For Ubuntu setup:
 - The `common/` directory contains configurations that work across all platforms
 - Each OS directory contains platform-specific configurations
 - Setup scripts are provided for each OS to automate configuration installation
+- The shell scripts (`setup.sh`) use LF line endings so they run correctly on Linux/macOS; `.gitattributes` enforces this
 - Some configurations (like ZSH setup) require manual steps - refer to the instruction files

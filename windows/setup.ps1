@@ -5,27 +5,30 @@ Windows setup script - installs config files to their correct locations
 Write-Host "Setting up Windows configurations..."
 
 # Common configurations
-$scriptDir = Split-Path -Path $PSScriptRoot -Parent
-$commonDir = Join-Path -Path $scriptDir -ChildPath "..\common"
+$commonDir = Join-Path -Path $PSScriptRoot -ChildPath "..\common"
 
 # Zed editor configurations
+# On Windows, Zed stores its configuration in %APPDATA%\Zed
 $zedDir = Join-Path -Path $commonDir -ChildPath "zed"
 $zedTargetDir = Join-Path -Path $env:APPDATA -ChildPath "Zed"
 
 if (Test-Path -Path $zedDir -PathType Container) {
     Write-Host "Installing Zed configurations..."
-    
-    # Create target directory if it doesn't exist
-    if (-not (Test-Path -Path $zedTargetDir -PathType Container)) {
-        New-Item -ItemType Directory -Path $zedTargetDir | Out-Null
+
+    $zedThemesDir = Join-Path -Path $zedTargetDir -ChildPath "themes"
+    New-Item -ItemType Directory -Path $zedTargetDir -Force | Out-Null
+    New-Item -ItemType Directory -Path $zedThemesDir -Force | Out-Null
+
+    # Keymap and settings go directly into the Zed config directory
+    foreach ($file in @("keymap.json", "settings.json")) {
+        Copy-Item -Path (Join-Path -Path $zedDir -ChildPath $file) -Destination $zedTargetDir -Force
+        Write-Host "Copied $file to $zedTargetDir"
     }
-    
-    # Copy all Zed config files
-    Get-ChildItem -Path $zedDir -File | ForEach-Object {
-        Copy-Item -Path $_.FullName -Destination (Join-Path -Path $zedTargetDir -ChildPath $_.Name)
-        Write-Host "Copied $($_.Name) to $zedTargetDir"
-    }
-    
+
+    # Custom themes go into the themes subdirectory
+    Copy-Item -Path (Join-Path -Path $zedDir -ChildPath "miguel-blur-3.json") -Destination (Join-Path -Path $zedThemesDir -ChildPath "miguel-blur-3.json") -Force
+    Write-Host "Copied miguel-blur-3.json to $zedThemesDir"
+
     Write-Host "Zed configurations installed."
 }
 
